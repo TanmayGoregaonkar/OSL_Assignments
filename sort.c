@@ -3,7 +3,6 @@
 #include <sys/types.h>
 #include <stdlib.h>
 
-
 // Merge Sort
 void merge(int arr[], int l, int m, int r)
 {
@@ -64,7 +63,7 @@ void mergeSort(int arr[], int l, int r)
         merge(arr, l, m, r);
     }
 }
-// Printing Array 
+// Printing Array
 void printArray(int A[], int size)
 {
     int i;
@@ -74,73 +73,80 @@ void printArray(int A[], int size)
 }
 
 // Quick Sort
-void swap(int* a, int* b) 
-{ 
-    int t = *a; 
-    *a = *b; 
-    *b = t; 
-} 
-int partition (int arr[], int low, int high) 
-{ 
-    int pivot = arr[high]; // pivot 
-    int i = (low - 1); // Index of smaller element and indicates the right position of pivot found so far
-  
-    for (int j = low; j <= high - 1; j++) 
-    { 
-        // If current element is smaller than the pivot 
-        if (arr[j] < pivot) 
-        { 
-            i++; // increment index of smaller element 
-            swap(&arr[i], &arr[j]); 
-        } 
-    } 
-    swap(&arr[i + 1], &arr[high]); 
-    return (i + 1); 
-} 
-  
-void quickSort(int arr[], int low, int high) 
-{ 
-    if (low < high) 
-    { 
-       
-        int pi = partition(arr, low, high); 
-  
-        quickSort(arr, low, pi - 1); 
-        quickSort(arr, pi + 1, high); 
-    } 
-} 
-void sorting(){
-    pid_t pid =fork();
-    // Parent merge sort
-    if (pid>0)
+void swap(int *a, int *b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+int partition(int arr[], int low, int high)
+{
+    int pivot = arr[high]; // pivot
+    int i = (low - 1);     // Index of smaller element and indicates the right position of pivot found so far
+
+    for (int j = low; j <= high - 1; j++)
     {
-        printf("\nParent Process %d\n",(int)getpid());
-        int a[]={18,16,13,11,9,7,4,2};
-        int a_size=sizeof(a)/sizeof(a[0]);
+        // If current element is smaller than the pivot
+        if (arr[j] < pivot)
+        {
+            i++; // increment index of smaller element
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+void quickSort(int arr[], int low, int high)
+{
+    if (low < high)
+    {
+
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+void sorting()
+{
+    
+    int arr[5];
+    printf("\nEnter elements of array\n");
+    for (int i = 0; i < 5; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+    pid_t pid = fork();
+    // Parent merge sort
+    
+
+    if (pid > 0)
+    {
+        printf("\nParent Process %d\n", (int)getpid());
 
         printf("\nGIven array is \n");
-        printArray(a,a_size);
+        printArray(arr, 5);
 
-        mergeSort(a,0,a_size-1);
+        mergeSort(arr, 0, 5 - 1);
 
-         printf("\n Sorted array is \n");
-        printArray(a,a_size);
+        printf("\n Sorted array is \n");
+        printArray(arr, 5);
         printf("\n");
     }
-    //child quick sort
+    // child quick sort
     else
     {
-         printf("\nChild Process %d\n",(int)getppid());
-          printf("\nParent of Child %d\n",(int)getppid());
+        printf("\nChild Process %d\n", (int)getppid());
+        printf("\nParent of Child %d\n", (int)getppid());
 
-          int arr[]={18,65,90,33,44};
-        int arr_size=sizeof(arr)/sizeof(arr[0]);
+        int arr[] = {18, 65, 90, 33, 44};
+        int arr_size = sizeof(arr) / sizeof(arr[0]);
 
-        quickSort(arr,0,arr_size-1);
-printArray(arr,arr_size);
-printf("\n");
+        quickSort(arr, 0, arr_size - 1);
+        printArray(arr, arr_size);
+        printf("\n");
     }
-    
 }
 
 void orphan()
@@ -220,7 +226,7 @@ int main()
             printf("Invalid choice");
             break;
         }
-    }while (opt!=4);
+    } while (opt != 4);
 
     return 0;
 }
